@@ -90,9 +90,14 @@ when you add a priced type.
 
 ## Release
 
-Push a tag: `git tag v0.1.0 && git push origin v0.1.0`. The Release workflow
-runs goreleaser, which uploads the archives and `checksums.txt` that
-`finfocus plugin install` expects.
+Push a signed tag: `git tag -s v0.1.0 -m v0.1.0 && git push origin v0.1.0`.
+The Release workflow runs goreleaser, which uploads the archives and
+`checksums.txt` that `finfocus plugin install` expects, and attests each
+archive's build provenance. Verify a download with:
+
+```bash
+gh attestation verify <archive> -R mkutlak/finfocus-plugin-scaleway-public
+```
 
 ## License
 
