@@ -1,0 +1,33 @@
+# Asset names follow what `finfocus plugin install github.com/<owner>/<repo>`
+# looks for: <repo>_<version>_<os>_<arch>.tar.gz (.zip on Windows), a binary
+# named finfocus-plugin-<name>, and a checksums file named checksums.txt.
+version: 2
+
+project_name: finfocus-plugin-scaleway-public
+
+builds:
+  - id: plugin
+    main: ./cmd/plugin
+    binary: finfocus-plugin-scaleway-public
+    env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w -X github.com/mkutlak/finfocus-plugin-scaleway-public/internal/pricing.PluginVersion={{ .Version }}
+
+archives:
+  - formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  use: github

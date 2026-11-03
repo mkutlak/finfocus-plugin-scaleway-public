@@ -1,0 +1,4 @@
+# Tool versions for local development. CI reads the Go version from go.mod.
+[tools]
+go = "1.27.3"
+golangci-lint = "2.15.0"
